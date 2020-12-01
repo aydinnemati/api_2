@@ -31,14 +31,14 @@ uvicorn main:app
 ```
 # CI
 
-### for running test 
+### for running test :
 
 ```bash
 pytest --cov main
 ```
 ### coverage :
 ```bash
-pytest --cov main
+python3 -m pytest --cov |grep  "^main.py"
 ```
 ### linter
 
