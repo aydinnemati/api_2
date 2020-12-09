@@ -1,0 +1,38 @@
+version: "3"
+
+services: 
+  nginx_comp:
+    container_name: nginx_comp
+    image: nginx:stable
+    networks:
+      - net1
+    ports: 
+      - "80:80"
+    volumes: 
+      - ./nginx_conf:/etc/nginx/conf.d/default.conf
+    depends_on: 
+      - api_comp 
+
+  mysql_comp:
+    container_name: mysql_comp
+    image: mysql/mysql-server:8.0.22
+    networks: 
+      - net1
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=doc_api_1
+    restart: always
+  api_comp:
+    container_name: api_comp
+    image: poj2
+    networks: 
+      - net1
+    depends_on: 
+      - mysql_comp
+    restart: always
+
+networks:
+  net1:  
+    name: net1
