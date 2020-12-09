@@ -8,4 +8,4 @@
 /lib
 /lib64
 .coverage
-
+/mysql_data

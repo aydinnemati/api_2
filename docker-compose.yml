@@ -24,6 +24,9 @@ services:
       - MYSQL_PASSWORD=admin
       - MYSQL_DATABASE=doc_api_1
     restart: always
+    volumes: 
+      - ./mysql_data:/var/lib/mysql
+
   api_comp:
     container_name: api_comp
     image: poj2
