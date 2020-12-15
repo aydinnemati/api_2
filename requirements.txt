@@ -3,10 +3,8 @@ uvicorn
 mypy
 pytest
 pytest-cov
-pep8
 flake8
 mysql-connector-python
 pydantic
 curl
 requests
-pytest-warnings

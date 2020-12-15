@@ -13,7 +13,7 @@ docker-compose up -d
 ### for running test :
 
 ```bash
-pytest --cov main
+python3 -m pytest
 ```
 ### coverage :
 ```bash
@@ -21,11 +21,7 @@ python3 -m pytest --cov |grep  "^main.py"
 ```
 ### linter
 
-##### pep8
 
-```bash
-pep8 main.py
-```
 ##### flake8
 
 ```bash
@@ -39,7 +35,7 @@ mypy main.py
 
 # Contributing
 
-put,post and get requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+delete,put,post and get requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
