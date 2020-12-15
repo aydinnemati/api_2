@@ -44,7 +44,7 @@ test:
             $IMAGE_NGINX_NAME
       
       # testing units
-      - python3 -m pytest main.py
+      - python3 -m pytest 
       # coverage
       - python3 -m pytest --cov |grep  "^main.py"
       ## linter
