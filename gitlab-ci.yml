@@ -1,0 +1,63 @@
+image: docker:stable
+
+services:
+  - docker:dind
+stages:
+  - test
+
+variables:
+    IMAGE_MYSQL_NAME: mysql/mysql-server:8.0.22
+    IMAGE_NGINX_NAME: nginx:stable
+    IMAGE_NAME: poj2
+    DB_MYSQL_CONT_NAME: mysql_comp
+    APP_CONT_NAME: api_comp
+    NGINX_CONT_NAME: nginx_comp
+
+test:
+  stage: test 
+  script:
+      - docker network create -d bridge net1
+      - |
+        docker pull $IMAGE_MYSQL_NAME
+      - |
+        docker pull $IMAGE_NGINX_NAME 
+      - |
+        docker build -f Dockerfile -t $IMAGE_NAME .
+      - |
+        docker run --name $DB_MYSQL_CONT_NAME -d --restart always \
+            -e MYSQL_ROOT_PASSWORD='root' \
+            -e MYSQL_USER='admin' \
+            -e MYSQL_PASSWORD='admin' \
+            -e MYSQL_DATABASE='doc_api_1' \
+            --network=net1 \
+            $IMAGE_MYSQL_NAME
+      - |
+        docker run -d --network=net1 \
+            --restart always \
+            --name $APP_CONT_NAME \
+            $IMAGE_NAME
+      - |
+        docker run -d --name $NGINX_CONT_NAME \
+            --network=net1 \
+            --restart always \
+            -p 80:80 \
+            $IMAGE_NGINX_NAME
+      
+      # testing units
+      - python3 -m pytest main.py
+      # coverage
+      - python3 -m pytest --cov |grep  "^main.py"
+      ## linter
+      # pep8
+      - pep8 main.py
+      # flake8
+      - flake8 main.py
+      # mypy
+      - mypy main.py
+      - |
+        docker image rm -f $IMAGE_NAME
+      - |
+        docker stop $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
+      - |
+        docker rm  $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
+      
