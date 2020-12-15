@@ -1,19 +1,6 @@
 version: "3"
 
 services: 
-  nginx_comp:
-    container_name: nginx_comp
-    image: nginx:stable
-    networks:
-      - net1
-    restart: always
-    ports: 
-      - "80:80"
-    volumes: 
-      - ./nginx_conf:/etc/nginx/conf.d/default.conf
-    depends_on: 
-      - api_comp 
-
   mysql_comp:
     container_name: mysql_comp
     image: mysql/mysql-server:8.0.22
@@ -30,13 +17,17 @@ services:
 
   api_comp:
     container_name: api_comp
-    image: poj3
+    image: python:3.8
     networks: 
       - net1
     restart: always
+    volumes: 
+      - .:/app
+    ports: 
+      - "8000:8000"
     depends_on: 
       - mysql_comp
-    # command: uvicorn main:app --host 0.0.0.0 --port 8080
+    command: tail -f /dev/null && pip3 install fastapi uvicorn mypy pytest pytest-cov pep8 flake8 mysql-connector-python pydantic curl
 networks:
   net1:  
     name: net1

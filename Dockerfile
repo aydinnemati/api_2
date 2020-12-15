@@ -1,10 +1,8 @@
 FROM python:3.8
 
-WORKDIR /app
-
-RUN pip3 install fastapi uvicorn mypy pytest pytest-cov pep8 flake8 mysql-connector-python pydantic curl
-
 COPY . /app
+
+RUN pip3 install -r /app/requirements.txt 
 
 WORKDIR /app
 

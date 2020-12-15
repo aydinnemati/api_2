@@ -59,7 +59,7 @@ def show_users():
 # delete users - endpoint 3
 
 
-@app.post("/del/")
+@app.delete("/del/")
 def del_user(phone: str = Query(
                                 ...,
                                 min_length=11,
@@ -71,6 +71,7 @@ def del_user(phone: str = Query(
         raise HTTPException(status_code=406, detail="User is not existed")
     else:
         mycursor.execute("DELETE FROM users WHERE phone = %s", (phone,))
+        mydb.commit()
         return {"User is deleted": check_user}
 
 # delete users - endpoint 4

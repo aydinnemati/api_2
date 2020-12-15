@@ -67,7 +67,7 @@ def test_e3_1():
     val = (name, num)
     mycursor.execute(sql, val)
     mydb.commit()
-    response = client.post("/del/?phone="+num)
+    response = client.delete("/del/?phone="+num)
     assert response.status_code == 200
     assert response.json() == {"User is deleted": [name, num]}
     mycursor.execute("DELETE FROM users WHERE phone = %s", (num,))
@@ -75,7 +75,7 @@ def test_e3_1():
 
 
 def test_e3_2():
-    response = client.post("/del/?phone="+num)
+    response = client.delete("/del/?phone="+num)
     assert response.status_code == 406
 
 # end 4

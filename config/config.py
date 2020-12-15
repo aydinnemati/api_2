@@ -1,5 +1,5 @@
 from pydantic import BaseSettings
- # localhost
+# ##  localhost
 # class db_settings(BaseSettings):
 #     DB_HOST: str = "127.0.0.1"
 #     DB_USER: str = "admin"
