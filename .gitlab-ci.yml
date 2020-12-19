@@ -44,16 +44,14 @@ test:
             $IMAGE_NGINX_NAME
       
       # testing units
-      - python3 -m pytest 
+      - docker exec -i $APP_CONT_NAME python3 -m pytest 
       # coverage
-      - python3 -m pytest --cov |grep  "^main.py"
+      - docker exec -i $APP_CONT_NAME python3 -m pytest --cov |grep  "^main.py"
       ## linter
-      # pep8
-      - pep8 main.py
       # flake8
-      - flake8 main.py
+      - docker exec -i $APP_CONT_NAME flake8 main.py
       # mypy
-      - mypy main.py
+      - docker exec -i $APP_CONT_NAME mypy main.py
       - |
         docker image rm -f $IMAGE_NAME
       - |
