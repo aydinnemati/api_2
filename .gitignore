@@ -10,3 +10,4 @@
 /.pytest_cache
 /mysql_data
 /docker-compose.dev.yml
+.env

@@ -5,6 +5,6 @@ pytest
 pytest-cov
 flake8
 mysql-connector-python
-pydantic
 curl
 requests
+python-decouple
