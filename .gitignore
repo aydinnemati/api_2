@@ -9,6 +9,5 @@
 .coverage
 /.pytest_cache
 /mysql_data
-/docker-compose.dev.yml
-.env
+./.env
 /test/__pycache__
