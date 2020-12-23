@@ -1,3 +1,5 @@
+import time
+time.sleep(20)
 from fastapi import FastAPI, Query, HTTPException
 from database import mycursor, mydb
 

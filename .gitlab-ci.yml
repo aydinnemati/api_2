@@ -10,8 +10,8 @@ variables:
     IMAGE_NGINX_NAME: nginx:stable
     IMAGE_NAME: poj
     DB_MYSQL_CONT_NAME: mysql_comp
-    APP_CONT_NAME: api_test
-    NGINX_CONT_NAME: nginx_test
+    APP_CONT_NAME: api_comp
+    NGINX_CONT_NAME: nginx_comp
     DB_HOST: mysql_comp
     DB_USER: admin
     USER_PASSWORD: admin
@@ -21,35 +21,35 @@ variables:
 test:
   stage: test 
   script:
-      #  - docker network create -d bridge net1
-      #  - |
-      #    docker pull $IMAGE_MYSQL_NAME
-      #  - |
-      #    docker pull $IMAGE_NGINX_NAME 
-      #  - |
-      #    docker build -f Dockerfile -t $IMAGE_NAME .
-      #  - |
-      #   docker run --name $DB_MYSQL_CONT_NAME \
-      #       -d --restart always \
-      #       -e MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD \
-      #       -e MYSQL_USER=$DB_USER \
-      #       -e MYSQL_PASSWORD=$USER_PASSWORD \
-      #       -e MYSQL_DATABASE=$DB_NAME \
-      #       --network=net1 \
-      #       $IMAGE_MYSQL_NAME
-      #  - |
-      #   docker run -d \
-      #       --network=net1 \
-      #       --restart always \
-      #       --name $APP_CONT_NAME \
-      #       $IMAGE_NAME
-      #  - |
-      #   docker run -d \
-      #       --name $NGINX_CONT_NAME \
-      #       --network=net1 \
-      #       --restart always \
-      #       -p 80:80 \
-      #       $IMAGE_NGINX_NAME
+       - docker network create -d bridge net1
+       - |
+         docker pull $IMAGE_MYSQL_NAME
+       - |
+         docker pull $IMAGE_NGINX_NAME 
+       - |
+         docker build -f Dockerfile -t $IMAGE_NAME .
+       - |
+        docker run --name $DB_MYSQL_CONT_NAME \
+            -d --restart always \
+            -e MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD \
+            -e MYSQL_USER=$DB_USER \
+            -e MYSQL_PASSWORD=$USER_PASSWORD \
+            -e MYSQL_DATABASE=$DB_NAME \
+            --network=net1 \
+            $IMAGE_MYSQL_NAME
+       - |
+        docker run -d \
+            --network=net1 \
+            --restart always \
+            --name $APP_CONT_NAME \
+            $IMAGE_NAME
+       - |
+        docker run -d \
+            --name $NGINX_CONT_NAME \
+            --network=net1 \
+            --restart always \
+            -p 80:80 \
+            $IMAGE_NGINX_NAME
       
        # testing units
        - docker exec -i $APP_CONT_NAME python -m pytest 
