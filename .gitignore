@@ -9,5 +9,5 @@
 .coverage
 /.pytest_cache
 /mysql_data
-./.env
+.env
 /test/__pycache__
