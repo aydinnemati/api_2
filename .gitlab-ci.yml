@@ -25,10 +25,6 @@ test:
        - |
          docker pull $IMAGE_MYSQL_NAME
        - |
-         docker pull $IMAGE_NGINX_NAME 
-       - |
-         docker build -f Dockerfile -t $IMAGE_NAME .
-       - |
         docker run --name $DB_MYSQL_CONT_NAME \
             -d --restart always \
             -e MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD \
@@ -37,6 +33,10 @@ test:
             -e MYSQL_DATABASE=$DB_NAME \
             --network=net1 \
             $IMAGE_MYSQL_NAME
+       - |
+         docker pull $IMAGE_NGINX_NAME 
+       - |
+         docker build -f Dockerfile -t $IMAGE_NAME .
        - |
         docker run -d \
             --network=net1 \
