@@ -9,3 +9,4 @@
 /lib64
 .coverage
 /mysql_data
+/test/__pycache__

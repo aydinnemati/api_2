@@ -16,13 +16,13 @@ variables:
 test:
   stage: test 
   script:
-      - docker network create -d bridge net1
-      - |
-        docker pull $IMAGE_MYSQL_NAME
-      - |
-        docker pull $IMAGE_NGINX_NAME 
-      - |
-        docker build -f Dockerfile -t $IMAGE_NAME .
+      # - docker network create -d bridge net1
+      # - |
+      #   docker pull $IMAGE_MYSQL_NAME
+      # - |
+      #   docker pull $IMAGE_NGINX_NAME 
+      # - |
+      #   docker build -f Dockerfile -t $IMAGE_NAME .
       - |
         docker run --name $DB_MYSQL_CONT_NAME -d --restart always \
             -e MYSQL_ROOT_PASSWORD='root' \
@@ -58,4 +58,5 @@ test:
         docker stop $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
       - |
         docker rm  $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
-      
+      - |
+        docker network rm net1

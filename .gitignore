@@ -11,3 +11,4 @@
 /mysql_data
 /docker-compose.dev.yml
 .env
+/test/__pycache__

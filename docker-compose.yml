@@ -20,17 +20,17 @@ services:
     networks: 
       - net1
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin
-      - MYSQL_DATABASE=doc_api_1
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${USER_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
     restart: always
     volumes: 
       - ./mysql_data:/var/lib/mysql
 
   api_comp:
     container_name: api_comp
-    image: poj3
+    image: poj
     networks: 
       - net1
     restart: always

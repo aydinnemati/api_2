@@ -1,12 +1,12 @@
-import mysql.connector
-from decouple import config
+import mysql.connector # type: ignore
+from decouple import config # type: ignore
 
 mydb = mysql.connector.connect(
     host = config("DB_HOST"),
     # port = config("DB_PORT"), 
     user = config("DB_USER"),
     password = config("USER_PASSWORD"),
-    # database = config("DB_NAME")
+    database = config("DB_NAME")
 )
 
 mycursor = mydb.cursor()
