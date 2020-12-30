@@ -21,50 +21,49 @@ variables:
 test:
   stage: test 
   script:
-       - docker network create -d bridge net1
-       - |
-         docker pull $IMAGE_MYSQL_NAME
-       - |
-        docker run --name $DB_MYSQL_CONT_NAME \
-            -d --restart always \
-            -e MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD \
-            -e MYSQL_USER=$DB_USER \
-            -e MYSQL_PASSWORD=$USER_PASSWORD \
-            -e MYSQL_DATABASE=$DB_NAME \
-            --network=net1 \
-            $IMAGE_MYSQL_NAME
-       - |
-         docker pull $IMAGE_NGINX_NAME 
-       - |
-         docker build -f Dockerfile -t $IMAGE_NAME .
-       - |
-        docker run -d \
-            --network=net1 \
-            --restart always \
-            --name $APP_CONT_NAME \
-            $IMAGE_NAME
-       - |
-        docker run -d \
-            --name $NGINX_CONT_NAME \
-            --network=net1 \
-            --restart always \
-            -p 80:80 \
-            $IMAGE_NGINX_NAME
-      
-       # testing units
-       - docker exec -i $APP_CONT_NAME python -m pytest 
+      #  - docker network create -d bridge net1
+      #  - |
+      #    docker pull $IMAGE_MYSQL_NAME
+      #  - |
+      #    docker run --name $DB_MYSQL_CONT_NAME \
+      #       -d --restart always \
+      #       -e MYSQL_ROOT_PASSWORD=root \
+      #       -e MYSQL_USER=admin \
+      #       -e MYSQL_PASSWORD=admin \
+      #       -e MYSQL_DATABASE=doc_api_1 \
+      #       --network=net1 \
+      #       $IMAGE_MYSQL_NAME
+      #  - |
+        #  docker pull $IMAGE_NGINX_NAME 
+      #  - |
+      #    docker build -f Dockerfile -t $IMAGE_NAME .
+      #  - |
+      #    docker run -d \
+      #       --network=net1 \
+      #       --restart always \
+      #       --name $APP_CONT_NAME \
+      #       $IMAGE_NAME
+      #  - |
+      #    docker run -d \
+      #       --name $NGINX_CONT_NAME \
+      #       --network=net1 \
+      #       --restart always \
+      #       -p 80:80 \
+      #       $IMAGE_NGINX_NAME
+      #  # testing units
+       - docker exec -i $APP_CONT_NAME python -m pytest ./test/test_main.py
        # coverage
-       - docker exec -i $APP_CONT_NAME python -m pytest --cov |grep  "^main.py"
+       - docker exec -i $APP_CONT_NAME python -m pytest ./test/test_main.py --cov |grep  "^main.py"
        ## linter
        # flake8
        - docker exec -i $APP_CONT_NAME flake8 main.py
        # mypy
        - docker exec -i $APP_CONT_NAME mypy main.py
-       - |
-         docker image rm -f $IMAGE_NAME
-       - |
-         docker stop $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
-       - |
-         docker rm -f $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
-       - |
-         docker network rm net1
+      #  - |
+      #    docker image rm -f $IMAGE_NAME
+      #  - |
+      #    docker stop $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
+      #  - |
+      #    docker rm -f $NGINX_CONT_NAME $APP_CONT_NAME $DB_MYSQL_CONT_NAME
+      #  - |
+      #    docker network rm net1

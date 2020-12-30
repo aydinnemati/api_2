@@ -1,0 +1,42 @@
+version: "3"
+
+services: 
+  nginx_comp:
+    container_name: nginx_comp
+    image: nginx:stable
+    networks:
+      - net1
+    restart: always
+    ports: 
+      - "80:80"
+    volumes: 
+      - ./nginx_conf:/etc/nginx/conf.d/default.conf
+    depends_on: 
+      - api_comp 
+
+  mysql_comp:
+    container_name: mysql_comp
+    image: mysql/mysql-server:8.0.22
+    networks: 
+      - net1
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${USER_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    restart: always
+    volumes: 
+      - ./mysql_data:/var/lib/mysql
+
+  api_comp:
+    container_name: api_comp
+    image: poj
+    networks: 
+      - net1
+    restart: always
+    depends_on: 
+      - mysql_comp
+    # command: uvicorn main:app --host 0.0.0.0 --port 8080
+networks:
+  net1:  
+    name: net1

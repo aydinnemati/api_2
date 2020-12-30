@@ -11,3 +11,4 @@
 /mysql_data
 .env
 /test/__pycache__
+db_backup/
